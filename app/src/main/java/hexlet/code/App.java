@@ -1,8 +1,12 @@
 package hexlet.code;
 
-public final class App {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
-    }
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
 
+@Command(name = "app", mixinStandardHelpOptions = true, subcommands = { GenDiffCommand.class })
+public class App {
+    public static void main(String[] args) {
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
+    }
 }
