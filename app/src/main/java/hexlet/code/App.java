@@ -20,9 +20,9 @@ public class App implements Callable<Integer> {
             System.out.println(Differ.generate(this.filepath1, this.filepath2));
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
 
-        System.out.println(this.format);
+            return 1;
+        }
 
         return 0;
     }
