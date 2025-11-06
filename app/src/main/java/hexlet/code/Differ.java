@@ -1,11 +1,12 @@
 package hexlet.code;
 
-import tools.jackson.databind.JsonNode;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 public class Differ {
     public static String generate(String filePath1, String filePath2) throws Exception {
@@ -21,9 +22,9 @@ public class Differ {
         }
 
         ObjectMapper mapper = new  ObjectMapper();
-        JsonNode jsonNode = mapper.readTree(path);
-        JsonNode jsonNode2 = mapper.readTree(path2);
+        Map<String, Object> map = mapper.readValue(path, new TypeReference<Map<String,Object>>(){});
+        Map<String, Object> map2 = mapper.readValue(path2, new TypeReference<Map<String,Object>>(){});
 
-        return jsonNode.toString() + System.lineSeparator() + jsonNode2.toString();
+        return map.toString() + System.lineSeparator() + map2.toString();
     }
 }
