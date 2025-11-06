@@ -14,7 +14,12 @@ public class App implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(Differ.generate(this.filepath1, this.filepath2));
+        try {
+            System.out.println(Differ.generate(this.filepath1, this.filepath2));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println(this.format);
     }
 
