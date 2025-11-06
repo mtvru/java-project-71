@@ -2,7 +2,7 @@ plugins {
     id("application")
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
     id("com.github.ben-manes.versions") version "0.53.0"
-    id("org.sonarqube") version "6.3.1.5724"
+    id("org.sonarqube") version "7.0.1.6134"
     id("checkstyle")
 }
 
