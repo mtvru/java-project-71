@@ -1,17 +1,40 @@
+/**
+ * This package contains the main application entry point.
+ */
 package hexlet.code;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-
 import java.util.concurrent.Callable;
 
-@Command(name = "gendiff", mixinStandardHelpOptions = true, description = "Compares two configuration files and shows a difference.")
-public class App implements Callable<Integer> {
-    @CommandLine.Parameters(description = "path to first file")
+@Command(
+    name = "gendiff",
+    mixinStandardHelpOptions = true,
+    description = "Compares two configuration files and shows a difference."
+)
+public final class App implements Callable<Integer> {
+    private App() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Path to first file.
+     */
+    @CommandLine.Parameters(description = "Path to first file")
     private String filepath1;
-    @CommandLine.Parameters(description = "path to second file")
+    /**
+     * Path to second file.
+     */
+    @CommandLine.Parameters(description = "Path to second file")
     private String filepath2;
-    @CommandLine.Option(names = { "-f", "--format" }, defaultValue = "stylish", description = "output format [default: ${DEFAULT-VALUE}]")
+    /**
+     * Output format.
+     */
+    @CommandLine.Option(
+        names = { "-f", "--format" },
+        defaultValue = "stylish",
+        description = "Output format [default: ${DEFAULT-VALUE}]"
+    )
     private String format = "stylish";
 
     @Override
@@ -27,7 +50,10 @@ public class App implements Callable<Integer> {
         return 0;
     }
 
-    public static void main(String[] args) {
+    /**
+     * @param args command line arguments
+     */
+    public static void main(final String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }

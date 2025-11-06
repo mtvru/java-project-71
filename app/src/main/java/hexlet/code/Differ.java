@@ -11,8 +11,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Differ {
-    public static String generate(String filePath1, String filePath2) throws Exception {
+public final class Differ {
+    private Differ() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @param filePath1 the path to the first file
+     * @param filePath2 the path to the second file
+     * @return a formatted diff string
+     * @throws Exception if either file does not exist or cannot be read
+     */
+    public static String generate(
+            final String filePath1,
+            final String filePath2
+    )
+            throws Exception {
         Path path = Paths.get(filePath1).toAbsolutePath().normalize();
         Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
 
@@ -25,10 +39,16 @@ public class Differ {
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(path, new TypeReference<>() {
-        });
-        Map<String, Object> map2 = mapper.readValue(path2, new TypeReference<>() {
-        });
+        Map<String, Object> map = mapper.readValue(
+            path,
+            new TypeReference<>() {
+            }
+        );
+        Map<String, Object> map2 = mapper.readValue(
+            path2,
+            new TypeReference<>() {
+            }
+        );
         Map<String, Object> differ = new HashMap<>();
         map.forEach((k, v) -> {
             if (map2.containsKey(k) && map2.get(k).equals(v)) {
@@ -50,22 +70,25 @@ public class Differ {
             }
         });
 
-        return "{" + System.lineSeparator() +
-                differ
+        return "{"
+                + System.lineSeparator()
+                + differ
                 .entrySet()
                 .stream()
                 .sorted(
                     Comparator
-                    .comparing((Map.Entry<String, Object> e) -> {
-                        String k = e.getKey();
-                        return k.startsWith("+ ") || k.startsWith("- ") ? k.substring(2) : k;
-                    })
-                    .thenComparing(e -> e.getKey().startsWith("+ ") ? 1 : 0)
+                        .comparing((Map.Entry<String, Object> e) -> {
+                            String k = e.getKey();
+                            return k.startsWith("+ ") || k.startsWith("- ")
+                                ? k.substring(2) : k;
+                        })
+                        .thenComparing(e ->
+                            e.getKey().startsWith("+ ") ? 1 : 0)
                 )
                 .map(e -> {
                     String key = e.getKey();
-                    String prefix = key.startsWith("+ ") || key.startsWith("- ") ? "" : "  ";
-
+                    String prefix = key.startsWith("+ ") || key.startsWith("- ")
+                        ? "" : "  ";
                     return "  " + prefix + key + ": " + e.getValue();
                 })
                 .collect(Collectors.joining(System.lineSeparator()))
