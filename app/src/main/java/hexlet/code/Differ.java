@@ -25,8 +25,7 @@ public final class Differ {
     public static String generate(
             final String filePath1,
             final String filePath2
-    )
-            throws Exception {
+    ) throws Exception {
         Path path = Paths.get(filePath1).toAbsolutePath().normalize();
         Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
 
