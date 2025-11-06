@@ -6,7 +6,10 @@ import tools.jackson.databind.ObjectMapper;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Differ {
     public static String generate(String filePath1, String filePath2) throws Exception {
@@ -21,10 +24,51 @@ public class Differ {
             throw new Exception("File '" + path2 + "' does not exist.");
         }
 
-        ObjectMapper mapper = new  ObjectMapper();
-        Map<String, Object> map = mapper.readValue(path, new TypeReference<Map<String,Object>>(){});
-        Map<String, Object> map2 = mapper.readValue(path2, new TypeReference<Map<String,Object>>(){});
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(path, new TypeReference<>() {
+        });
+        Map<String, Object> map2 = mapper.readValue(path2, new TypeReference<>() {
+        });
+        Map<String, Object> differ = new HashMap<>();
+        map.forEach((k, v) -> {
+            if (map2.containsKey(k) && map2.get(k).equals(v)) {
+                differ.put(k, v);
+            } else if (map2.containsKey(k) && !map2.get(k).equals(v)) {
+                String key1 = "- " + k;
+                differ.put(key1, v);
+                String key2 = "+ " + k;
+                differ.put(key2, map2.get(k));
+            } else {
+                String key1 = "- " + k;
+                differ.put(key1, v);
+            }
+        });
+        map2.forEach((k, v) -> {
+            if (!map.containsKey(k)) {
+                String key1 = "+ " + k;
+                differ.put(key1, v);
+            }
+        });
 
-        return map.toString() + System.lineSeparator() + map2.toString();
+        return "{" + System.lineSeparator() +
+                differ
+                .entrySet()
+                .stream()
+                .sorted(
+                    Comparator
+                    .comparing((Map.Entry<String, Object> e) -> {
+                        String k = e.getKey();
+                        return k.startsWith("+ ") || k.startsWith("- ") ? k.substring(2) : k;
+                    })
+                    .thenComparing(e -> e.getKey().startsWith("+ ") ? 1 : 0)
+                )
+                .map(e -> {
+                    String key = e.getKey();
+                    String prefix = key.startsWith("+ ") || key.startsWith("- ") ? "" : "  ";
+
+                    return "  " + prefix + key + ": " + e.getValue();
+                })
+                .collect(Collectors.joining(System.lineSeparator()))
+                + System.lineSeparator() + "}";
     }
 }
