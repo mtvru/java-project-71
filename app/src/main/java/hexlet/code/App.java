@@ -13,10 +13,6 @@ import java.util.concurrent.Callable;
     description = "Compares two configuration files and shows a difference."
 )
 public final class App implements Callable<Integer> {
-    private App() {
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * Path to first file.
      */
