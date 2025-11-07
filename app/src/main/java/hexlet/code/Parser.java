@@ -15,7 +15,7 @@ public final class Parser {
     }
 
     /**
-     * Object mapper used for parsing files.
+     * Yaml mapper used for parsing files.
      */
     private static ObjectMapper mapper = new YAMLMapper();
 
