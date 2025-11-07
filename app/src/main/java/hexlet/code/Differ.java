@@ -1,11 +1,5 @@
 package hexlet.code;
 
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.ObjectMapper;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,28 +20,8 @@ public final class Differ {
             final String filePath1,
             final String filePath2
     ) throws Exception {
-        Path path = Paths.get(filePath1).toAbsolutePath().normalize();
-        Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
-
-        if (!Files.exists(path)) {
-            throw new Exception("File '" + path + "' does not exist.");
-        }
-
-        if (!Files.exists(path2)) {
-            throw new Exception("File '" + path2 + "' does not exist.");
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(
-            path,
-            new TypeReference<>() {
-            }
-        );
-        Map<String, Object> map2 = mapper.readValue(
-            path2,
-            new TypeReference<>() {
-            }
-        );
+        Map<String, Object> map = Parser.parse(filePath1);
+        Map<String, Object> map2 = Parser.parse(filePath2);
         Map<String, Object> differ = new HashMap<>();
         map.forEach((k, v) -> {
             if (map2.containsKey(k) && map2.get(k).equals(v)) {
