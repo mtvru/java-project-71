@@ -6,11 +6,17 @@ package hexlet.code;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import picocli.CommandLine;
 
 class AppTest {
     /**
@@ -28,18 +34,12 @@ class AppTest {
     }
 
     @Test
-    void testMain() {
-        App.main(new String[] {"file1.json", "file2.json"});
-        String ls = System.lineSeparator();
-        assertEquals("{"
-            + ls + "  - follow: false"
-            + ls + "    host: hexlet.io"
-            + ls + "  - proxy: 123.234.53.22"
-            + ls + "  - timeout: 50"
-            + ls + "  + timeout: 20"
-            + ls + "  + verbose: true"
-            + ls + "}",
-        output.toString(StandardCharsets.UTF_8).trim());
+    void testMain() throws IOException {
+        String[] args = "file1.json file2.json".split(" ");
+        new CommandLine(new App()).execute(args);
+        Path path = Paths.get("src/test/resources/fixtures/result.txt");
+        String expected = Files.readString(path).trim();
+        assertEquals(expected, output.toString(StandardCharsets.UTF_8).trim());
     }
 
     @AfterEach
