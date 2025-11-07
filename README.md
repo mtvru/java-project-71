@@ -5,5 +5,7 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mtvru_java-project-71&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mtvru_java-project-71)
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mtvru_java-project-71&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mtvru_java-project-71)
+
 ### Short video demo of the app
 https://asciinema.org/a/G6h4yccob2LKEuyALsX8Qnr28
