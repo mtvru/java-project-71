@@ -2,7 +2,7 @@ run-dist:
 	./build/install/app/bin/app $(ARGS)
 
 build:
-	./gradlew build
+	./gradlew clean build
 
 report:
 	./gradlew jacocoTestReport
