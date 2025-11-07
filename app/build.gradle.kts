@@ -1,5 +1,6 @@
 plugins {
     id("application")
+    id("jacoco")
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
     id("com.github.ben-manes.versions") version "0.53.0"
     id("org.sonarqube") version "7.0.1.6134"
@@ -21,11 +22,17 @@ sonar {
     properties {
         property("sonar.projectKey", "mtvru_java-project-71")
         property("sonar.organization", "mtvru")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.login", System.getenv("SONAR_TOKEN"))
     }
 }
 
 checkstyle {
     toolVersion = "10.12.4"
+}
+
+jacoco {
+    toolVersion = "0.8.14"
 }
 
 dependencies {
@@ -43,4 +50,13 @@ tasks.test {
 
 tasks.compileJava {
     options.compilerArgs.add("-Aproject=${project.group}/${project.name}")
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacocoHtml"))
+    }
 }
