@@ -11,7 +11,6 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +36,9 @@ class AppTest {
     void testMain() throws IOException {
         String[] args = "file1.json file2.json".split(" ");
         new CommandLine(new App()).execute(args);
-        Path path = Paths.get("src/test/resources/fixtures/result.txt");
+        Path path = Path.of(
+            "src", "test", "resources", "fixtures", "result9.txt"
+        );
         String expected = Files.readString(path).trim();
         assertEquals(expected, output.toString(StandardCharsets.UTF_8).trim());
     }
