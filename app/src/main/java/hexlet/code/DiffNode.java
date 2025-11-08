@@ -58,6 +58,21 @@ public final class DiffNode {
     }
 
     /**
+     * @return the render value.
+     */
+    public String getRenderValue() {
+        if (Utils.isObjectOrArray(this.value)) {
+            return "[complex value]";
+        }
+
+        if (this.value instanceof String) {
+            return "'" + this.value + "'";
+        }
+
+        return this.value == null ? "null" : this.value.toString();
+    }
+
+    /**
      * @return the status.
      */
     public Status getStatus() {
@@ -69,5 +84,12 @@ public final class DiffNode {
      */
     public boolean isStatusAdded() {
         return this.status == Status.ADDED;
+    }
+
+    /**
+     * @return true if the node is changed, false otherwise.
+     */
+    public boolean isStatusChanged() {
+        return this.status != Status.UNCHANGED;
     }
 }

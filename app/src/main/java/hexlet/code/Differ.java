@@ -1,8 +1,6 @@
 package hexlet.code;
 
 import hexlet.code.formatters.Formatter;
-import hexlet.code.formatters.Stylish;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,18 +8,22 @@ import java.util.Objects;
 
 public final class Differ {
     private Differ() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Instantiation of " + Differ.class.getName() + " is not allowed"
+        );
     }
 
     /**
-     * @param filePath1 the path to the first file
-     * @param filePath2 the path to the second file
-     * @return a formatted diff string
-     * @throws Exception if either file does not exist or cannot be read
+     * @param filePath1 the path to the first file.
+     * @param filePath2 the path to the second file.
+     * @param formatName the name of the output format.
+     * @return a formatted diff string.
+     * @throws Exception if either file does not exist or cannot be read.
      */
     public static String generate(
             final String filePath1,
-            final String filePath2
+            final String filePath2,
+            final String formatName
     ) throws Exception {
         Map<String, Object> map = Parser.parse(filePath1);
         Map<String, Object> map2 = Parser.parse(filePath2);
@@ -43,7 +45,7 @@ public final class Differ {
                 differList.add(new DiffNode(k, v, DiffNode.Status.ADDED));
             }
         });
-        Formatter formatter = new Stylish();
+        Formatter formatter = FormatterFactory.createFormatter(formatName);
 
         return formatter.format(differList);
     }

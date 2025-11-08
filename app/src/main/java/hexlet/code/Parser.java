@@ -11,7 +11,9 @@ import java.util.Map;
 
 public final class Parser {
     private Parser() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Instantiation of " + Parser.class.getName() + " is not allowed"
+        );
     }
 
     /**

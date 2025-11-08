@@ -21,9 +21,14 @@ public final class DifferTest {
     void testGenerate(
         final Path file1,
         final Path file2,
-        final Path expectedFile
+        final Path expectedFile,
+        final String formatName
     ) throws Exception {
-        String result = Differ.generate(file1.toString(), file2.toString());
+        String result = Differ.generate(
+            file1.toString(),
+            file2.toString(),
+            formatName
+        );
         String expected = Files.readString(expectedFile).trim();
         assertEquals(expected, result);
     }
@@ -33,22 +38,32 @@ public final class DifferTest {
                 Arguments.of(
                         FIXTURES.resolve("file51.json"),
                         FIXTURES.resolve("file52.json"),
-                        FIXTURES.resolve("result6.txt")
+                        FIXTURES.resolve("result6.txt"),
+                        App.FORMAT_STYLISH
                 ),
                 Arguments.of(
                         FIXTURES.resolve("file81.yaml"),
                         FIXTURES.resolve("file82.yml"),
-                        FIXTURES.resolve("result6.txt")
+                        FIXTURES.resolve("result6.txt"),
+                        App.FORMAT_STYLISH
                 ),
                 Arguments.of(
                         FIXTURES.resolve("file91.json"),
                         FIXTURES.resolve("file92.json"),
-                        FIXTURES.resolve("result9.txt")
+                        FIXTURES.resolve("result9.txt"),
+                        App.FORMAT_STYLISH
                 ),
                 Arguments.of(
                         FIXTURES.resolve("file91.yaml"),
                         FIXTURES.resolve("file92.yml"),
-                        FIXTURES.resolve("result9.txt")
+                        FIXTURES.resolve("result9.txt"),
+                        App.FORMAT_STYLISH
+                ),
+                Arguments.of(
+                        FIXTURES.resolve("file91.json"),
+                        FIXTURES.resolve("file92.json"),
+                        FIXTURES.resolve("result10.txt"),
+                        App.FORMAT_PLAIN
                 )
         );
     }
