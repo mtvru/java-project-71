@@ -1,10 +1,12 @@
 package hexlet.code;
 
-import java.util.Comparator;
-import java.util.HashMap;
+import hexlet.code.formatters.Formatter;
+import hexlet.code.formatters.Stylish;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public final class Differ {
     private Differ() {
@@ -23,49 +25,26 @@ public final class Differ {
     ) throws Exception {
         Map<String, Object> map = Parser.parse(filePath1);
         Map<String, Object> map2 = Parser.parse(filePath2);
-        Map<String, Object> differ = new HashMap<>();
+        List<DiffNode> differList = new ArrayList<>();
         map.forEach((k, v) -> {
             if (map2.containsKey(k) && Objects.equals(map2.get(k), v)) {
-                differ.put(k, v);
+                differList.add(new DiffNode(k, v, DiffNode.Status.UNCHANGED));
             } else if (map2.containsKey(k) && !Objects.equals(map2.get(k), v)) {
-                String key1 = "- " + k;
-                differ.put(key1, v);
-                String key2 = "+ " + k;
-                differ.put(key2, map2.get(k));
+                differList.add(new DiffNode(k, v, DiffNode.Status.REMOVED));
+                differList.add(new DiffNode(
+                    k, map2.get(k), DiffNode.Status.ADDED
+                ));
             } else {
-                String key1 = "- " + k;
-                differ.put(key1, v);
+                differList.add(new DiffNode(k, v, DiffNode.Status.REMOVED));
             }
         });
         map2.forEach((k, v) -> {
             if (!map.containsKey(k)) {
-                String key1 = "+ " + k;
-                differ.put(key1, v);
+                differList.add(new DiffNode(k, v, DiffNode.Status.ADDED));
             }
         });
+        Formatter formatter = new Stylish();
 
-        return "{"
-                + System.lineSeparator()
-                + differ
-                .entrySet()
-                .stream()
-                .sorted(
-                    Comparator
-                        .comparing((Map.Entry<String, Object> e) -> {
-                            String k = e.getKey();
-                            return k.startsWith("+ ") || k.startsWith("- ")
-                                ? k.substring(2) : k;
-                        })
-                        .thenComparing(e ->
-                            e.getKey().startsWith("+ ") ? 1 : 0)
-                )
-                .map(e -> {
-                    String key = e.getKey();
-                    String prefix = key.startsWith("+ ") || key.startsWith("- ")
-                        ? "" : "  ";
-                    return "  " + prefix + key + ": " + e.getValue();
-                })
-                .collect(Collectors.joining(System.lineSeparator()))
-                + System.lineSeparator() + "}";
+        return formatter.format(differList);
     }
 }
