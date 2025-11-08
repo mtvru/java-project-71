@@ -15,3 +15,7 @@
 **YAML files difference:**
 [View demo on Asciinema](https://asciinema.org/a/WqQ1iCFMcvGqoDrnUnfwTferq)
 
+
+**JSON files difference with nested nodes:**
+[View demo on Asciinema](https://asciinema.org/a/WPiIcqdHN9luIPUS1kOwKyFim)
+
