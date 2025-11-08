@@ -3,6 +3,7 @@ package hexlet.code;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Differ {
@@ -24,9 +25,9 @@ public final class Differ {
         Map<String, Object> map2 = Parser.parse(filePath2);
         Map<String, Object> differ = new HashMap<>();
         map.forEach((k, v) -> {
-            if (map2.containsKey(k) && map2.get(k).equals(v)) {
+            if (map2.containsKey(k) && Objects.equals(map2.get(k), v)) {
                 differ.put(k, v);
-            } else if (map2.containsKey(k) && !map2.get(k).equals(v)) {
+            } else if (map2.containsKey(k) && !Objects.equals(map2.get(k), v)) {
                 String key1 = "- " + k;
                 differ.put(key1, v);
                 String key2 = "+ " + k;
