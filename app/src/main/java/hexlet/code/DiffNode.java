@@ -65,7 +65,7 @@ public final class DiffNode {
     /**
      * @return the render value.
      */
-    public String getRenderValue() {
+    public String getRenderedValue() {
         if (Utils.isObjectOrArray(this.value)) {
             return "[complex value]";
         }

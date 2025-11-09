@@ -37,12 +37,12 @@ public final class Plain implements Formatter {
 
             return node.isStatusAdded()
                     ? "Property '" + key + "' was added with value: "
-                        + node.getRenderValue()
+                        + node.getRenderedValue()
                     : "Property '" + key + "' was removed";
         }
 
-        String oldValue = nodes.getFirst().getRenderValue();
-        String newValue = nodes.getLast().getRenderValue();
+        String oldValue = nodes.getFirst().getRenderedValue();
+        String newValue = nodes.getLast().getRenderedValue();
 
         return "Property '" + key + "' was updated. From "
                 + oldValue + " to " + newValue;
