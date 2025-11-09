@@ -27,7 +27,7 @@ public final class Parser {
      * @throws Exception if the file does not exist or cannot be parsed.
      */
     public static Map<String, Object> parse(final String filePath)
-    throws Exception {
+        throws Exception {
         Path path = Paths.get(filePath).toAbsolutePath().normalize();
 
         if (!Files.exists(path)) {
