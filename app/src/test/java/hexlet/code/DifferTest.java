@@ -39,25 +39,25 @@ public final class DifferTest {
                         FIXTURES.resolve("file91.json"),
                         FIXTURES.resolve("file92.json"),
                         FIXTURES.resolve("result9.txt"),
-                        App.FORMAT_STYLISH
+                        Differ.FORMAT_STYLISH
                 ),
                 Arguments.of(
                         FIXTURES.resolve("file91.yaml"),
                         FIXTURES.resolve("file92.yml"),
                         FIXTURES.resolve("result9.txt"),
-                        App.FORMAT_STYLISH
+                        Differ.FORMAT_STYLISH
                 ),
                 Arguments.of(
                         FIXTURES.resolve("file91.json"),
                         FIXTURES.resolve("file92.json"),
                         FIXTURES.resolve("result10.txt"),
-                        App.FORMAT_PLAIN
+                        Differ.FORMAT_PLAIN
                 ),
                 Arguments.of(
                         FIXTURES.resolve("file91.json"),
                         FIXTURES.resolve("file92.json"),
                         FIXTURES.resolve("result11.json"),
-                        App.FORMAT_JSON
+                        Differ.FORMAT_JSON
                 )
         );
     }

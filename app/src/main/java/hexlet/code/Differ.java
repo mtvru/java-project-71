@@ -7,10 +7,36 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class Differ {
+    /**
+     * Default stylish format.
+     */
+    public static final String FORMAT_STYLISH = "stylish";
+    /**
+     * Plain format.
+     */
+    public static final String FORMAT_PLAIN = "plain";
+    /**
+     * Json format.
+     */
+    public static final String FORMAT_JSON = "json";
+
     private Differ() {
         throw new UnsupportedOperationException(
             "Instantiation of " + Differ.class.getName() + " is not allowed"
         );
+    }
+
+    /**
+     * @param filePath1 the path to the first file.
+     * @param filePath2 the path to the second file.
+     * @return a formatted diff string.
+     * @throws Exception if either file does not exist or cannot be read.
+     */
+    public static String generate(
+        final String filePath1,
+        final String filePath2
+    ) throws Exception {
+        return generate(filePath1, filePath2, FORMAT_STYLISH);
     }
 
     /**

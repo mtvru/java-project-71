@@ -21,9 +21,9 @@ public final class FormatterFactory {
      */
     public static Formatter createFormatter(final String name) {
         return switch (name.toLowerCase()) {
-            case App.FORMAT_STYLISH -> new Stylish();
-            case App.FORMAT_PLAIN -> new Plain();
-            case App.FORMAT_JSON -> new Json();
+            case Differ.FORMAT_STYLISH -> new Stylish();
+            case Differ.FORMAT_PLAIN -> new Plain();
+            case Differ.FORMAT_JSON -> new Json();
             default -> throw new IllegalArgumentException(
                 "Unknown formatter: " + name
             );

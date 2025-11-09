@@ -14,19 +14,6 @@ import java.util.concurrent.Callable;
 )
 public final class App implements Callable<Integer> {
     /**
-     * Default stylish format.
-     */
-    public static final String FORMAT_STYLISH = "stylish";
-    /**
-     * Plain format.
-     */
-    public static final String FORMAT_PLAIN = "plain";
-    /**
-     * Json format.
-     */
-    public static final String FORMAT_JSON = "json";
-
-    /**
      * Path to first file.
      */
     @CommandLine.Parameters(description = "Path to first file")
@@ -44,7 +31,7 @@ public final class App implements Callable<Integer> {
         defaultValue = "stylish",
         description = "Output format [default: ${DEFAULT-VALUE}]"
     )
-    private String format = FORMAT_STYLISH;
+    private String format = Differ.FORMAT_STYLISH;
 
     @Override
     public Integer call() throws Exception {
