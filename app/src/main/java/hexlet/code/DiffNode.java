@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public final class DiffNode {
     /**
      * Enum representing the status of a node in the diff.
@@ -20,12 +22,15 @@ public final class DiffNode {
     }
 
     /** The key of the node. */
+    @JsonProperty
     private final String key;
 
     /** The value associated with the key. */
+    @JsonProperty
     private final Object value;
 
     /** The status indicating if the node was added, removed, or unchanged. */
+    @JsonProperty
     private final Status status;
 
     /**

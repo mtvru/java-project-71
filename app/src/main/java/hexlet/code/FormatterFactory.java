@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import hexlet.code.formatters.Formatter;
+import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
 
@@ -22,6 +23,7 @@ public final class FormatterFactory {
         return switch (name.toLowerCase()) {
             case App.FORMAT_STYLISH -> new Stylish();
             case App.FORMAT_PLAIN -> new Plain();
+            case App.FORMAT_JSON -> new Json();
             default -> throw new IllegalArgumentException(
                 "Unknown formatter: " + name
             );

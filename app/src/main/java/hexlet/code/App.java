@@ -21,6 +21,10 @@ public final class App implements Callable<Integer> {
      * Plain format.
      */
     public static final String FORMAT_PLAIN = "plain";
+    /**
+     * Json format.
+     */
+    public static final String FORMAT_JSON = "json";
 
     /**
      * Path to first file.

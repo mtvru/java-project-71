@@ -10,6 +10,7 @@ public interface Formatter {
      *
      * @param differList the list of DiffNode objects representing differences.
      * @return a formatted string representing the diff.
+     * @throws RuntimeException if formatting fails.
      */
     String format(List<DiffNode> differList);
 }
