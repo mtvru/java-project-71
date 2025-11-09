@@ -20,3 +20,6 @@
 
 **JSON files difference with plain formatter:**
 [View demo on Asciinema](https://asciinema.org/a/5pNkl5WvUXF1FuKySdJM0BRzX)
+
+**JSON files difference with json formatter:**
+[View demo on Asciinema](https://asciinema.org/a/tqWzjiEXD3NvPTKahfVfD7vPy)
