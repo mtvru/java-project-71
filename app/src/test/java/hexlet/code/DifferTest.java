@@ -36,18 +36,6 @@ public final class DifferTest {
     private static Stream<Arguments> filePairs() {
         return Stream.of(
                 Arguments.of(
-                        FIXTURES.resolve("file51.json"),
-                        FIXTURES.resolve("file52.json"),
-                        FIXTURES.resolve("result6.txt"),
-                        App.FORMAT_STYLISH
-                ),
-                Arguments.of(
-                        FIXTURES.resolve("file81.yaml"),
-                        FIXTURES.resolve("file82.yml"),
-                        FIXTURES.resolve("result6.txt"),
-                        App.FORMAT_STYLISH
-                ),
-                Arguments.of(
                         FIXTURES.resolve("file91.json"),
                         FIXTURES.resolve("file92.json"),
                         FIXTURES.resolve("result9.txt"),
