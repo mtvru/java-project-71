@@ -2,8 +2,6 @@ package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,19 +12,12 @@ public final class Plain implements Formatter {
         Map<String, List<DiffNode>> grouppedDifferList = differList
             .stream()
             .filter(DiffNode::isStatusChanged)
-            .sorted(
-                Comparator
-                    .comparing(DiffNode::getKey)
-                    .thenComparing(e ->
-                        e.isStatusAdded() ? 1 : 0)
-            )
-            .collect(Collectors.groupingBy(
-                DiffNode::getKey, LinkedHashMap::new, Collectors.toList()
-            ));
+            .collect(Collectors.groupingBy(DiffNode::getKey));
 
         return grouppedDifferList
                 .entrySet()
                 .stream()
+                .sorted(Map.Entry.comparingByKey())
                 .map(entry -> formatEntry(entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
@@ -41,8 +32,9 @@ public final class Plain implements Formatter {
                     : "Property '" + key + "' was removed";
         }
 
-        String oldValue = nodes.getFirst().getRenderedValue();
-        String newValue = nodes.getLast().getRenderedValue();
+        boolean addedFirst = nodes.getFirst().isStatusAdded();
+        String oldValue = nodes.get(addedFirst ? 1 : 0).getRenderedValue();
+        String newValue = nodes.get(addedFirst ? 0 : 1).getRenderedValue();
 
         return "Property '" + key + "' was updated. From "
                 + oldValue + " to " + newValue;
