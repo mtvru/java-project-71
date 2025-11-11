@@ -25,7 +25,8 @@ public final class Json implements Formatter {
     }
 
     @Override
-    public String format(final List<DiffNode> differList) throws JsonProcessingException {
+    public String format(final List<DiffNode> differList)
+        throws JsonProcessingException {
         List<DiffNode> list = differList.stream()
             .sorted(Comparator
                 .comparing(DiffNode::getKey)

@@ -26,11 +26,9 @@ public final class DifferTest {
         final Path expectedFile,
         final String formatName
     ) throws Exception {
-        String result = Differ.generate(
-            file1.toString(),
-            file2.toString(),
-            formatName
-        );
+        String result = (formatName == null)
+            ? Differ.generate(file1.toString(), file2.toString())
+            : Differ.generate(file1.toString(), file2.toString(), formatName);
         String expected = Files.readString(expectedFile).trim();
         assertEquals(expected, result);
     }
@@ -56,10 +54,34 @@ public final class DifferTest {
                         Differ.FORMAT_PLAIN
                 ),
                 Arguments.of(
+                        FIXTURES.resolve("file91.yaml"),
+                        FIXTURES.resolve("file92.yml"),
+                        FIXTURES.resolve("result10.txt"),
+                        Differ.FORMAT_PLAIN
+                ),
+                Arguments.of(
                         FIXTURES.resolve("file91.json"),
                         FIXTURES.resolve("file92.json"),
                         FIXTURES.resolve("result11.json"),
                         Differ.FORMAT_JSON
+                ),
+                Arguments.of(
+                        FIXTURES.resolve("file91.yaml"),
+                        FIXTURES.resolve("file92.yml"),
+                        FIXTURES.resolve("result11.json"),
+                        Differ.FORMAT_JSON
+                ),
+                Arguments.of(
+                        FIXTURES.resolve("file91.yaml"),
+                        FIXTURES.resolve("file92.yml"),
+                        FIXTURES.resolve("result9.txt"),
+                        null
+                ),
+                Arguments.of(
+                        FIXTURES.resolve("file91.yaml"),
+                        FIXTURES.resolve("file92.yml"),
+                        FIXTURES.resolve("result9.txt"),
+                        null
                 )
         );
     }
