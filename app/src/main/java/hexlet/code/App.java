@@ -34,7 +34,7 @@ public final class App implements Callable<Integer> {
     private String format = Differ.FORMAT_STYLISH;
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         try {
             System.out.println(
                 Differ.generate(this.filepath1, this.filepath2, this.format)
