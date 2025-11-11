@@ -1,6 +1,10 @@
 package hexlet.code;
 
 import hexlet.code.formatters.Formatter;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -49,11 +53,24 @@ public final class Differ {
             final String filePath2,
             final String formatName
     ) throws Exception {
-        Map<String, Object> map = Parser.parse(filePath1);
-        Map<String, Object> map2 = Parser.parse(filePath2);
-        List<DiffNode> differList = DiffCollector.collect(map, map2);
+        String content1 = getContent(filePath1);
+        String content2 = getContent(filePath2);
+        Map<String, Object> map1 = Parser.parse(content1);
+        Map<String, Object> map2 = Parser.parse(content2);
+        List<DiffNode> differList = DiffCollector.collect(map1, map2);
         Formatter formatter = FormatterFactory.createFormatter(formatName);
 
         return formatter.format(differList);
+    }
+
+    private static String getContent(final String filePath)
+        throws Exception {
+        Path path = Paths.get(filePath).toAbsolutePath().normalize();
+
+        if (!Files.exists(path)) {
+            throw new Exception("File '" + path + "' does not exist.");
+        }
+
+        return Files.readString(path);
     }
 }

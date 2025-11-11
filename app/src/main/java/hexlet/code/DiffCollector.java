@@ -16,16 +16,16 @@ public final class DiffCollector {
     /**
      * Collects a list of DiffNode objects.
      *
-     * @param map the first map.
+     * @param map1 the first map.
      * @param map2 the second map.
      * @return a list of DiffNode objects.
      */
     public static List<DiffNode> collect(
-        final Map<String, Object> map,
+        final Map<String, Object> map1,
         final Map<String, Object> map2
     ) {
         List<DiffNode> differList = new ArrayList<>();
-        map.forEach((k, v) -> {
+        map1.forEach((k, v) -> {
             if (map2.containsKey(k) && Objects.equals(map2.get(k), v)) {
                 differList.add(new DiffNode(k, v, DiffNode.Status.UNCHANGED));
             } else if (map2.containsKey(k) && !Objects.equals(map2.get(k), v)) {
@@ -38,7 +38,7 @@ public final class DiffCollector {
             }
         });
         map2.forEach((k, v) -> {
-            if (!map.containsKey(k)) {
+            if (!map1.containsKey(k)) {
                 differList.add(new DiffNode(k, v, DiffNode.Status.ADDED));
             }
         });

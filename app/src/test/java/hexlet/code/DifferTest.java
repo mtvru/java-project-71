@@ -1,6 +1,8 @@
 package hexlet.code;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.Arguments;
@@ -60,5 +62,20 @@ public final class DifferTest {
                         Differ.FORMAT_JSON
                 )
         );
+    }
+
+    @Test
+    void testDifferThrowsExceptionWhenFileDoesNotExist() {
+        String nonExistentFilePath = "nonexistent_file.yml";
+        Exception exception = assertThrows(Exception.class, () -> {
+            Differ.generate(nonExistentFilePath, nonExistentFilePath);
+        });
+        String expectedMessage = "File '"
+                + Path.of(nonExistentFilePath)
+                .toAbsolutePath()
+                .normalize()
+                + "' does not exist.";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 }

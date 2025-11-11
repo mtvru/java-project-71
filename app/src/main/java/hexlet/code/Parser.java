@@ -1,12 +1,9 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 
 public final class Parser {
@@ -22,20 +19,14 @@ public final class Parser {
     private static ObjectMapper mapper = new YAMLMapper();
 
     /**
-     * @param filePath path to the file.
+     * @param content string.
      * @return map representation of the parsed content.
-     * @throws Exception if the file does not exist or cannot be parsed.
+     * @throws JsonProcessingException if the content cannot be parsed.
      */
-    public static Map<String, Object> parse(final String filePath)
-        throws Exception {
-        Path path = Paths.get(filePath).toAbsolutePath().normalize();
-
-        if (!Files.exists(path)) {
-            throw new Exception("File '" + path + "' does not exist.");
-        }
-
+    public static Map<String, Object> parse(final String content)
+        throws JsonProcessingException {
         return mapper.readValue(
-                path.toFile(),
+                content,
                 new TypeReference<>() {
                 }
         );
