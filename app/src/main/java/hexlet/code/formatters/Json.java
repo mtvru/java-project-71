@@ -2,6 +2,7 @@ package hexlet.code.formatters;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.DiffNode;
 import java.util.Comparator;
@@ -24,17 +25,13 @@ public final class Json implements Formatter {
     }
 
     @Override
-    public String format(final List<DiffNode> differList) {
-        try {
-            List<DiffNode> list = differList.stream()
-                .sorted(Comparator
-                    .comparing(DiffNode::getKey)
-                    .thenComparing(e -> e.isStatusAdded() ? 1 : 0))
-                .toList();
+    public String format(final List<DiffNode> differList) throws JsonProcessingException {
+        List<DiffNode> list = differList.stream()
+            .sorted(Comparator
+                .comparing(DiffNode::getKey)
+                .thenComparing(e -> e.isStatusAdded() ? 1 : 0))
+            .toList();
 
-            return mapper.writeValueAsString(list);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize JSON", e);
-        }
+        return mapper.writeValueAsString(list);
     }
 }
