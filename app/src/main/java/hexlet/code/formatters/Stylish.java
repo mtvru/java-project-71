@@ -19,12 +19,8 @@ public final class Stylish implements Formatter {
                             e.isStatusAdded() ? 1 : 0)
                 )
                 .map(node -> {
-                    String prefix = switch (node.getStatus()) {
-                        case ADDED -> "+ ";
-                        case REMOVED -> "- ";
-                        default -> "  ";
-                    };
-                    return "  " + prefix + node.getKey()
+                    String sign = node.getStatus().getSign();
+                    return "  " + sign + " " + node.getKey()
                             + ": " + node.getValue();
                 })
                 .collect(Collectors.joining(System.lineSeparator()))

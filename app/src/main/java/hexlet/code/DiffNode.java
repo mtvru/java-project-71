@@ -2,23 +2,31 @@ package hexlet.code;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 public final class DiffNode {
     /**
      * Enum representing the status of a node in the diff.
      */
     public enum Status {
         /**
-         * Indicates that the node was added in the new version.
+         * Available statuses.
          */
-        ADDED,
+        ADDED, REMOVED, UNCHANGED;
         /**
-         * Indicates that the node was removed from the old version.
+         * Sign map.
          */
-        REMOVED,
+        private static final Map<Status, String> SIGN_MAP = Map.of(
+                ADDED, "+",
+                REMOVED, "-",
+                UNCHANGED, " "
+        );
         /**
-         * Indicates that the node is unchanged between versions.
+         * @return String
          */
-        UNCHANGED
+        public String getSign() {
+            return SIGN_MAP.getOrDefault(this, " ");
+        }
     }
 
     /** The key of the node. */
@@ -63,7 +71,7 @@ public final class DiffNode {
     }
 
     /**
-     * @return the render value.
+     * @return the rendered value.
      */
     public String getRenderedValue() {
         if (Utils.isObjectOrArray(this.value)) {
