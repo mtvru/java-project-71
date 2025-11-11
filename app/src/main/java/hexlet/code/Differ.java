@@ -1,10 +1,8 @@
 package hexlet.code;
 
 import hexlet.code.formatters.Formatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public final class Differ {
     /**
@@ -53,24 +51,7 @@ public final class Differ {
     ) throws Exception {
         Map<String, Object> map = Parser.parse(filePath1);
         Map<String, Object> map2 = Parser.parse(filePath2);
-        List<DiffNode> differList = new ArrayList<>();
-        map.forEach((k, v) -> {
-            if (map2.containsKey(k) && Objects.equals(map2.get(k), v)) {
-                differList.add(new DiffNode(k, v, DiffNode.Status.UNCHANGED));
-            } else if (map2.containsKey(k) && !Objects.equals(map2.get(k), v)) {
-                differList.add(new DiffNode(k, v, DiffNode.Status.REMOVED));
-                differList.add(new DiffNode(
-                    k, map2.get(k), DiffNode.Status.ADDED
-                ));
-            } else {
-                differList.add(new DiffNode(k, v, DiffNode.Status.REMOVED));
-            }
-        });
-        map2.forEach((k, v) -> {
-            if (!map.containsKey(k)) {
-                differList.add(new DiffNode(k, v, DiffNode.Status.ADDED));
-            }
-        });
+        List<DiffNode> differList = DiffCollector.collect(map, map2);
         Formatter formatter = FormatterFactory.createFormatter(formatName);
 
         return formatter.format(differList);
