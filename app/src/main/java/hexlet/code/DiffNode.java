@@ -9,13 +9,7 @@ public final class DiffNode {
      * Enum representing the status of a node in the diff.
      */
     public enum Status {
-        /**
-         * Available statuses.
-         */
         ADDED, REMOVED, UNCHANGED;
-        /**
-         * Sign map.
-         */
         private static final Map<Status, String> SIGN_MAP = Map.of(
                 ADDED, "+",
                 REMOVED, "-",

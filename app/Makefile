@@ -8,7 +8,7 @@ build:
 	./gradlew clean build
 
 test:
-	./gradlew cleanTest test
+	./gradlew clean test
 
 report:
 	./gradlew jacocoTestReport
