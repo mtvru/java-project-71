@@ -28,15 +28,33 @@ public final class Plain implements Formatter {
 
             return node.isStatusAdded()
                     ? "Property '" + key + "' was added with value: "
-                        + node.getRenderedValue()
+                        + this.getRenderedValue(node)
                     : "Property '" + key + "' was removed";
         }
 
         boolean addedFirst = nodes.getFirst().isStatusAdded();
-        String oldValue = nodes.get(addedFirst ? 1 : 0).getRenderedValue();
-        String newValue = nodes.get(addedFirst ? 0 : 1).getRenderedValue();
+        String oldValue = this.getRenderedValue(nodes.get(addedFirst ? 1 : 0));
+        String newValue = this.getRenderedValue(nodes.get(addedFirst ? 0 : 1));
 
         return "Property '" + key + "' was updated. From "
                 + oldValue + " to " + newValue;
+    }
+
+    private String getRenderedValue(DiffNode node) {
+        Object value = node.getValue();
+
+        if (this.isObjectOrArray(value)) {
+            return "[complex value]";
+        }
+
+        if (value instanceof String) {
+            return "'" + value + "'";
+        }
+
+        return value == null ? "null" : value.toString();
+    }
+
+    private boolean isObjectOrArray(final Object value) {
+        return value instanceof Map<?, ?> || value instanceof List<?>;
     }
 }

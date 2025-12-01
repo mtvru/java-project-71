@@ -55,8 +55,8 @@ public final class Differ {
     ) throws Exception {
         String content1 = getContent(filePath1);
         String content2 = getContent(filePath2);
-        Map<String, Object> map1 = Parser.parse(content1);
-        Map<String, Object> map2 = Parser.parse(content2);
+        Map<String, Object> map1 = Parser.parse(content1, fileFormat(filePath1));
+        Map<String, Object> map2 = Parser.parse(content2, fileFormat(filePath2));
         List<DiffNode> differList = DiffCollector.collect(map1, map2);
         Formatter formatter = FormatterFactory.createFormatter(formatName);
 
@@ -72,5 +72,15 @@ public final class Differ {
         }
 
         return Files.readString(path);
+    }
+
+    private static String fileFormat(String filePath) {
+        String ext = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+
+        return switch (ext) {
+            case "json" -> Parser.FORMAT_JSON;
+            case "yaml", "yml" -> Parser.FORMAT_YAML;
+            default -> throw new IllegalArgumentException("Unsupported extension: " + ext);
+        };
     }
 }

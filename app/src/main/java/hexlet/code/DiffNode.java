@@ -65,21 +65,6 @@ public final class DiffNode {
     }
 
     /**
-     * @return the rendered value.
-     */
-    public String getRenderedValue() {
-        if (Utils.isObjectOrArray(this.value)) {
-            return "[complex value]";
-        }
-
-        if (this.value instanceof String) {
-            return "'" + this.value + "'";
-        }
-
-        return this.value == null ? "null" : this.value.toString();
-    }
-
-    /**
      * @return the status.
      */
     public Status getStatus() {

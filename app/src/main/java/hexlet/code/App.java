@@ -14,12 +14,12 @@ import java.util.concurrent.Callable;
 )
 public final class App implements Callable<Integer> {
     /**
-     * Path to first file.
+     * Path to the first file.
      */
     @CommandLine.Parameters(description = "Path to first file")
     private String filepath1;
     /**
-     * Path to second file.
+     * Path to the second file.
      */
     @CommandLine.Parameters(description = "Path to second file")
     private String filepath2;
@@ -40,8 +40,7 @@ public final class App implements Callable<Integer> {
                 Differ.generate(this.filepath1, this.filepath2, this.format)
             );
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            System.err.println("Error: " + e.getMessage());
             return 1;
         }
 
