@@ -9,40 +9,31 @@ import java.util.stream.Collectors;
 public final class Plain implements Formatter {
     @Override
     public String format(final List<DiffNode> differList) {
-        Map<String, List<DiffNode>> grouppedDifferList = differList
-            .stream()
-            .filter(DiffNode::isStatusChanged)
-            .collect(Collectors.groupingBy(DiffNode::getKey));
-
-        return grouppedDifferList
-                .entrySet()
+        return differList
                 .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .map(entry -> formatEntry(entry.getKey(), entry.getValue()))
+                .filter(DiffNode::isStatusChanged)
+                .map(this::formatNode)
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private String formatEntry(final String key, final List<DiffNode> nodes) {
-        if (nodes.size() == 1) {
-            DiffNode node = nodes.getFirst();
-
-            return node.isStatusAdded()
-                    ? "Property '" + key + "' was added with value: "
-                        + this.getRenderedValue(node)
-                    : "Property '" + key + "' was removed";
+    private String formatNode(final DiffNode node) {
+        if (node.isStatusAdded()) {
+            return "Property '" + node.getKey() + "' was added with value: "
+                    + this.getRenderedValue(node.getNewValue());
         }
 
-        boolean addedFirst = nodes.getFirst().isStatusAdded();
-        String oldValue = this.getRenderedValue(nodes.get(addedFirst ? 1 : 0));
-        String newValue = this.getRenderedValue(nodes.get(addedFirst ? 0 : 1));
+        if (node.isStatusRemoved()) {
+            return "Property '" + node.getKey() + "' was removed";
+        }
 
-        return "Property '" + key + "' was updated. From "
+        String oldValue = this.getRenderedValue(node.getOldValue());
+        String newValue = this.getRenderedValue(node.getNewValue());
+
+        return "Property '" + node.getKey() + "' was updated. From "
                 + oldValue + " to " + newValue;
     }
 
-    private String getRenderedValue(DiffNode node) {
-        Object value = node.getValue();
-
+    private String getRenderedValue(Object value) {
         if (this.isObjectOrArray(value)) {
             return "[complex value]";
         }

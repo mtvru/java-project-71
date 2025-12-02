@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 public final class DiffCollector {
     private DiffCollector() {
@@ -14,7 +16,7 @@ public final class DiffCollector {
     }
 
     /**
-     * Collects a list of DiffNode objects.
+     * Collects a sorted list of DiffNode objects.
      *
      * @param map1 the first map.
      * @param map2 the second map.
@@ -24,24 +26,26 @@ public final class DiffCollector {
         final Map<String, Object> map1,
         final Map<String, Object> map2
     ) {
+        Set<String> set = new TreeSet<>(map1.keySet());
+        set.addAll(map2.keySet());
         List<DiffNode> differList = new ArrayList<>();
-        map1.forEach((k, v) -> {
-            if (map2.containsKey(k) && Objects.equals(map2.get(k), v)) {
-                differList.add(new DiffNode(k, v, DiffNode.Status.UNCHANGED));
-            } else if (map2.containsKey(k) && !Objects.equals(map2.get(k), v)) {
-                differList.add(new DiffNode(k, v, DiffNode.Status.REMOVED));
-                differList.add(new DiffNode(
-                        k, map2.get(k), DiffNode.Status.ADDED
-                ));
-            } else {
-                differList.add(new DiffNode(k, v, DiffNode.Status.REMOVED));
+
+        for (String key : set) {
+            boolean key1Exists =  map1.containsKey(key);
+            boolean key2Exists =  map2.containsKey(key);
+            Object value1 = map1.get(key);
+            Object value2 = map2.get(key);
+
+            if (key1Exists && key2Exists && Objects.equals(value1, value2)) {
+                differList.add(new DiffNode(key, value1, value2, DiffNode.Status.UNCHANGED));
+            } else if (key1Exists && key2Exists && !Objects.equals(value1, value2)) {
+                differList.add(new DiffNode(key, value1, value2, DiffNode.Status.UPDATED));
+            } else if (key1Exists && !key2Exists) {
+                differList.add(new DiffNode(key, value1, null, DiffNode.Status.REMOVED));
+            } else if (!key1Exists && key2Exists) {
+                differList.add(new DiffNode(key, null, value2, DiffNode.Status.ADDED));
             }
-        });
-        map2.forEach((k, v) -> {
-            if (!map1.containsKey(k)) {
-                differList.add(new DiffNode(k, v, DiffNode.Status.ADDED));
-            }
-        });
+        }
 
         return differList;
     }
