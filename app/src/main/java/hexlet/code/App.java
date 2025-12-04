@@ -31,7 +31,7 @@ public final class App implements Callable<Integer> {
         defaultValue = "stylish",
         description = "Output format [default: ${DEFAULT-VALUE}]"
     )
-    private String format = Differ.FORMAT_STYLISH;
+    private String format;
 
     @Override
     public Integer call() {

@@ -13,4 +13,7 @@ test:
 report:
 	./gradlew jacocoTestReport
 
+check:
+	./gradlew clean check
+
 .PHONY: build

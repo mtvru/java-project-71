@@ -7,8 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 
 public final class Parser {
-    public static final String FORMAT_YAML = "yaml";
-    public static final String FORMAT_JSON = "json";
+    private static final String FORMAT_YAML = "yaml";
+    private static final String FORMAT_YML = "yml";
+    private static final String FORMAT_JSON = "json";
 
     private Parser() {
         throw new UnsupportedOperationException(
@@ -37,7 +38,7 @@ public final class Parser {
         final String format
     ) throws JsonProcessingException {
         ObjectMapper mapper = switch (format) {
-            case FORMAT_YAML -> YAML_MAPPER;
+            case FORMAT_YAML, FORMAT_YML -> YAML_MAPPER;
             case FORMAT_JSON -> JSON_MAPPER;
             default -> throw new IllegalArgumentException(
                     "Unknown format: " + format

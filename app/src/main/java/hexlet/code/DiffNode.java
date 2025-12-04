@@ -51,6 +51,10 @@ public final class DiffNode {
         return this.status == Status.REMOVED;
     }
 
+    public boolean isStatusUpdated() {
+        return this.status == Status.UPDATED;
+    }
+
     public boolean isStatusUnchanged() {
         return this.status == Status.UNCHANGED;
     }

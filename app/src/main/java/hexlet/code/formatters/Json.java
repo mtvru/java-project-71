@@ -26,8 +26,6 @@ public final class Json implements Formatter {
     @Override
     public String format(final List<DiffNode> differList)
         throws JsonProcessingException {
-        List<DiffNode> list = differList.stream().toList();
-
-        return mapper.writeValueAsString(list);
+        return mapper.writeValueAsString(differList);
     }
 }

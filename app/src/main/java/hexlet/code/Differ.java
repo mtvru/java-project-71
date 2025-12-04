@@ -75,12 +75,6 @@ public final class Differ {
     }
 
     private static String fileFormat(String filePath) {
-        String ext = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-
-        return switch (ext) {
-            case "json" -> Parser.FORMAT_JSON;
-            case "yaml", "yml" -> Parser.FORMAT_YAML;
-            default -> throw new IllegalArgumentException("Unsupported extension: " + ext);
-        };
+        return filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
     }
 }

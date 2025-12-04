@@ -17,20 +17,22 @@ public final class Plain implements Formatter {
     }
 
     private String formatNode(final DiffNode node) {
+        String formatted = null;
+
         if (node.isStatusAdded()) {
-            return "Property '" + node.getKey() + "' was added with value: "
+            formatted = "Property '" + node.getKey() + "' was added with value: "
                     + this.getRenderedValue(node.getNewValue());
+        } else if (node.isStatusRemoved()) {
+            formatted = "Property '" + node.getKey() + "' was removed";
+        } else if (node.isStatusUpdated()) {
+            String oldValue = this.getRenderedValue(node.getOldValue());
+            String newValue = this.getRenderedValue(node.getNewValue());
+
+            formatted = "Property '" + node.getKey() + "' was updated. From "
+                    + oldValue + " to " + newValue;
         }
 
-        if (node.isStatusRemoved()) {
-            return "Property '" + node.getKey() + "' was removed";
-        }
-
-        String oldValue = this.getRenderedValue(node.getOldValue());
-        String newValue = this.getRenderedValue(node.getNewValue());
-
-        return "Property '" + node.getKey() + "' was updated. From "
-                + oldValue + " to " + newValue;
+        return formatted;
     }
 
     private String getRenderedValue(Object value) {

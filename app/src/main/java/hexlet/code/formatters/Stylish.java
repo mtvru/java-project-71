@@ -16,19 +16,19 @@ public final class Stylish implements Formatter {
     }
 
     private String formatNode(final DiffNode node) {
+        String formatted = null;
+
         if (node.isStatusAdded()) {
-            return "  + " + node.getKey() + ": " + node.getNewValue();
+            formatted = "  + " + node.getKey() + ": " + node.getNewValue();
+        } else if (node.isStatusRemoved()) {
+            formatted = "  - " + node.getKey() + ": " + node.getOldValue();
+        } else if (node.isStatusUnchanged()) {
+            formatted = "    " + node.getKey() + ": " + node.getOldValue();
+        } else if (node.isStatusUpdated()) {
+            formatted = "  - " + node.getKey() + ": " + node.getOldValue() + System.lineSeparator()
+                    + "  + " + node.getKey() + ": " + node.getNewValue();
         }
 
-        if (node.isStatusRemoved()) {
-            return "  - " + node.getKey() + ": " + node.getOldValue();
-        }
-
-        if (node.isStatusUnchanged()) {
-            return "    " + node.getKey() + ": " + node.getOldValue();
-        }
-
-        return "  - " + node.getKey() + ": " + node.getOldValue() + System.lineSeparator()
-               + "  + " + node.getKey() + ": " + node.getNewValue();
+        return formatted;
     }
 }
