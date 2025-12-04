@@ -1,5 +1,10 @@
 # Difference Calculator
 
+[![Actions Status](https://github.com/mtvru/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/mtvru/java-project-71/actions)
+[![SonarQube](https://github.com/mtvru/java-project-71/actions/workflows/build.yml/badge.svg)](https://github.com/mtvru/java-project-71/actions/workflows/build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mtvru_java-project-71&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mtvru_java-project-71)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mtvru_java-project-71&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mtvru_java-project-71)
+
 A lightweight console tool that analyzes and displays the differences between two files in different output formats (stylish, plain, json).
 
 ### Running the tool:
@@ -15,15 +20,6 @@ Then execute:
 ```bash
 make -C app run-dist ARGS="-f json file1.json file2.json"
 ```
-
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/mtvru/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/mtvru/java-project-71/actions)
-
-[![SonarQube](https://github.com/mtvru/java-project-71/actions/workflows/build.yml/badge.svg)](https://github.com/mtvru/java-project-71/actions/workflows/build.yml)
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mtvru_java-project-71&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mtvru_java-project-71)
-
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mtvru_java-project-71&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mtvru_java-project-71)
 
 ### Short video demo of the app:
 
